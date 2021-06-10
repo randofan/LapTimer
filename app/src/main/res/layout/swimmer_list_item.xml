@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:id="@+id/parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtlaneNumber"
+        android:textSize="30sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/txtlaneNumber"
+        android:layout_marginLeft="15dp"
+        android:hint="Swimmer Name"
+        android:id="@+id/editName"
+        android:visibility="visible"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/txtlaneNumber"
+        android:text="Swimmer Name"
+        android:id="@+id/txtName"
+        android:visibility="gone"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/txtlaneNumber"
+        android:text="Split"
+        android:id="@+id/splitBtn"
+        android:visibility="gone"/>
+
+    <!--TODO add arrow icon to click on-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/txtName"
+        android:id="@+id/expandBtn"
+        android:visibility="gone" />
+
+</RelativeLayout>
