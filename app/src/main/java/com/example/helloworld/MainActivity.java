@@ -22,18 +22,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // TODO add preview text here instead of having textview
         numberOfStudents = findViewById(R.id.dropdown_menu);
         numberOfStudents.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 numberOfSwimmers = position;
-
-                //TODO number of lanes needed to create in arr
-                /*
-                for (i = 0; i < position; i++) {
-                    arr.add(new Swimmer());
-                }
-                 */
             }
 
             @Override
@@ -42,13 +36,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         nextBtn = findViewById(R.id.nextBtn);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EnterNames.class);
-                intent.putExtra("NUMBER_OF_SWIMMERS", numberOfSwimmers);
-                startActivity(intent);
-            }
+        nextBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, EnterNames.class);
+            intent.putExtra("NUMBER_OF_SWIMMERS", numberOfSwimmers);
+            startActivity(intent);
         });
     }
 }

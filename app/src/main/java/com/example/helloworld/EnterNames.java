@@ -5,13 +5,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
 public class EnterNames extends AppCompatActivity {
 
     private RecyclerView swimmerRecview;
+    private Button nextBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +27,20 @@ public class EnterNames extends AppCompatActivity {
 
         ArrayList<Swimmer> swimmers = new ArrayList<>();
         for (int i = 0; i < numberOfSwimmers; i++) {
-            swimmers.add(new Swimmer());
+            swimmers.add(new Swimmer("Swimmer" + (i+1)));
         }
 
-        SwimmerRecViewAdapter adapter = new SwimmerRecViewAdapter();
+        SwimmerRecViewAdapter adapter = new SwimmerRecViewAdapter(1);
         adapter.setSwimmers(swimmers);
         swimmerRecview.setAdapter(adapter);
 
-        //if (swimmers.size() < 4) {
-            swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
-        //}
-        //else {
-        //    swimmerRecview.setLayoutManager(new GridLayoutManager(this, 2));
-        //}
-    //TODO add start timer button at bottom not in recycle view
+        swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
+
+        nextBtn = findViewById(R.id.actionBtn);
+        nextBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(EnterNames.this, Timer.class);
+            intent.putParcelableArrayListExtra("SWIMMERS", swimmers);
+            startActivity(intent);
+        });
     }
 }
