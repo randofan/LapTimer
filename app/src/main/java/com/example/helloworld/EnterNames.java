@@ -14,6 +14,7 @@ public class EnterNames extends AppCompatActivity {
 
     private RecyclerView swimmerRecview;
     private Button nextBtn;
+    private SwimmerRecViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class EnterNames extends AppCompatActivity {
             swimmers.add(new Swimmer("Swimmer " + (i+1)));
         }
 
-        SwimmerRecViewAdapter adapter = new SwimmerRecViewAdapter(this, 1);
+        adapter = new SwimmerRecViewAdapter(this, 1);
         adapter.setSwimmers(swimmers);
         swimmerRecview.setAdapter(adapter);
 

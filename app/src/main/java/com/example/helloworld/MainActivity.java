@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO add preview text here instead of having textview
         spinnerSwimmers = findViewById(R.id.dropdown_menu);
         spinnerSwimmers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getApplicationContext(), "Please enter the number of swimmers competing", Toast.LENGTH_SHORT).show();
+                numberOfSwimmers = 0;
             }
         });
 

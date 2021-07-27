@@ -28,7 +28,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
     private static ArrayList<Swimmer> swimmers = new ArrayList<>();
     private int type;
     private Context context;
-    private boolean isRunning = false;
+    private long currentCentiseconds = 0;
 
     public SwimmerRecViewAdapter(Context context, int layoutType) {
         type = layoutType;
@@ -47,20 +47,13 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
 
     public void setSwimmers(ArrayList<Swimmer> swimmers) {
         this.swimmers = swimmers;
+
         notifyDataSetChanged();
     }
 
-    public void setTimer (int startStop) {
-        if (startStop == 1) {
-            isRunning = true;
-        }
-        else if (startStop == 2) {
-            isRunning = false;
-        }
-        else {
-            isRunning = false;
-            // TODO reset time
-        }
+    public void setCurrentTimer(long currentCentiseconds) {
+        this.currentCentiseconds = currentCentiseconds;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -106,37 +99,12 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         else if (holder instanceof ViewHolder2) { //Timer
             ((ViewHolder2) holder).txtName.setText(swimmers.get(position).getName());
             ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
+
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
-                //if (stopwatch.isRunning()) {
-                //    swimmers.get(position).addLaps(stopwatch.elapsed(TimeUnit.MILLISECONDS));
-                    //Toast.makeText(context, "Split: " + stopwatch.elapsed(TimeUnit.MILLISECONDS), Toast.LENGTH_SHORT).show();
-                //Toast.makeText(context, "Split Button Clicked", Toast.LENGTH_SHORT).show();
-                //}
+                Toast.makeText(context, "Split", Toast.LENGTH_SHORT).show();
+                swimmers.get(position).addLaps(currentCentiseconds);
             });
-            runTimer();
-            // TODO figure out how to make this constantly update
-            //((ViewHolder2) holder).txtTimer.setText("" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
         }
-    }
-
-    private void runTimer() {
-        final Handler handler = new Handler();
-
-        handler.post(new Runnable () {
-            @Override
-            public void run() {
-                Stopwatch stopwatch = Stopwatch.createUnstarted(
-                        new Ticker() {
-                            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-                            @Override
-                            public long read() {
-                                return android.os.SystemClock.elapsedRealtimeNanos();
-                            }
-                        }
-                );
-
-            }
-        });
     }
 
     public class ViewHolder2 extends RecyclerView.ViewHolder {
@@ -144,13 +112,11 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         private TextView txtlaneNumber;
         private TextView txtName;
         private Button splitBtn;
-        private TextView txtTimer;
 
         public ViewHolder2(@NonNull View itemView, int viewType) {
             super(itemView);
             txtlaneNumber = itemView.findViewById(R.id.txtlaneNumber);
             txtName = itemView.findViewById(R.id.txtName);
-            txtTimer = itemView.findViewById(R.id.txtTimer);
 
             splitBtn = itemView.findViewById(R.id.splitBtn);
         }
@@ -160,6 +126,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
 
         private EditText editName;
         private TextView txtlaneNumber;
+
         public ViewHolder1(@NonNull View itemView, int viewType) {
             super(itemView);
             editName = itemView.findViewById(R.id.editName);
