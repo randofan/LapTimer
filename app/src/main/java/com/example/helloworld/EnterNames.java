@@ -1,14 +1,12 @@
 package com.example.helloworld;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
@@ -30,7 +28,7 @@ public class EnterNames extends AppCompatActivity {
             swimmers.add(new Swimmer("Swimmer" + (i+1)));
         }
 
-        SwimmerRecViewAdapter adapter = new SwimmerRecViewAdapter(1);
+        SwimmerRecViewAdapter adapter = new SwimmerRecViewAdapter(this, 1);
         adapter.setSwimmers(swimmers);
         swimmerRecview.setAdapter(adapter);
 

@@ -26,7 +26,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
 
     private static ArrayList<Swimmer> swimmers = new ArrayList<>();
     private int type;
-    //private Context context;
+    private Context context;
     /*
     private Stopwatch stopwatch = Stopwatch.createUnstarted(
         new Ticker() {
@@ -41,11 +41,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
 
     public SwimmerRecViewAdapter(Context context, int layoutType) {
         type = layoutType;
-        //this.context = context;
-    }
-
-    public SwimmerRecViewAdapter(int layoutType) {
-        type = layoutType;
+        this.context = context;
     }
 
     @Override
@@ -77,7 +73,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == 1) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item, parent, false);
-            return new ViewHolder(view, viewType);
+            return new ViewHolder1(view, viewType);
         }
 
         else if (viewType == 2) {
@@ -87,15 +83,15 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         else  {
             // TODO change to default setting
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item, parent, false);
-            return new ViewHolder(view, viewType);
+            return new ViewHolder1(view, viewType);
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder) {
-            ((ViewHolder) holder).txtlaneNumber.setText(position + 1);
-            ((ViewHolder) holder).editName.addTextChangedListener(new TextWatcher() {
+        if (holder instanceof ViewHolder1) {
+            ((ViewHolder1) holder).txtlaneNumber.setText(position + 1 + "");
+            ((ViewHolder1) holder).editName.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
@@ -106,7 +102,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    //Toast.makeText(context, s.toString(), Toast.LENGTH_SHORT).show();
                     if (!s.toString().isEmpty()) {
                         swimmers.get(position).setName(s.toString());
                     }
@@ -119,7 +114,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
             //((ViewHolder2) holder).txtTimer.setText("" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
 
             ((ViewHolder2) holder).txtName.setText(swimmers.get(position).getName());
-            ((ViewHolder2) holder).txtlaneNumber.setText(position + 1);
+            ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
 
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
                 //if (stopwatch.isRunning()) {
@@ -136,23 +131,23 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         private TextView txtlaneNumber;
         private TextView txtName;
         private Button splitBtn;
-        //private TextView txtTimer;
+        private TextView txtTimer;
 
         public ViewHolder2(@NonNull View itemView, int viewType) {
             super(itemView);
             txtlaneNumber = itemView.findViewById(R.id.txtlaneNumber);
             txtName = itemView.findViewById(R.id.txtName);
-            //txtTimer = itemView.findViewById(R.id.txtTimer);
+            txtTimer = itemView.findViewById(R.id.txtTimer);
 
             splitBtn = itemView.findViewById(R.id.splitBtn);
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder1 extends RecyclerView.ViewHolder {
 
         private EditText editName;
         private TextView txtlaneNumber;
-        public ViewHolder(@NonNull View itemView, int viewType) {
+        public ViewHolder1(@NonNull View itemView, int viewType) {
             super(itemView);
             editName = itemView.findViewById(R.id.editName);
             txtlaneNumber = itemView.findViewById(R.id.txtlaneNumber);

@@ -27,7 +27,7 @@ public class Timer extends AppCompatActivity {
         ArrayList<Swimmer> swimmers = getIntent().getParcelableArrayListExtra("SWIMMERS");
 
         swimmerRecview = findViewById(R.id.swimmerRecView);
-        SwimmerRecViewAdapter adapter = new SwimmerRecViewAdapter(2);
+        SwimmerRecViewAdapter adapter = new SwimmerRecViewAdapter(this, 2);
         adapter.setSwimmers(swimmers);
 
         swimmerRecview.setAdapter(adapter);
@@ -41,6 +41,7 @@ public class Timer extends AppCompatActivity {
                 //adapter.setTimer(true);
             }
             else { //stop
+                startBtn.setText("Reset Timer");
                 //adapter.setTimer(false);
             }
         });

@@ -13,6 +13,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
         android:textSize="50sp"
+        android:textAppearance="@android:style/TextAppearance.Large"
         android:layout_centerHorizontal="true"
         android:id="@+id/txtTimer"/>
 

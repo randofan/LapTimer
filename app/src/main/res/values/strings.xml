@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Split Timer</string>
-    <!-- TODO change it to 8 lanes max -->
     <string-array name="numberOfSwimmers">
+        <item> </item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
