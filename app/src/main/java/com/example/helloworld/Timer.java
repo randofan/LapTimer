@@ -36,13 +36,16 @@ public class Timer extends AppCompatActivity {
         startBtn = findViewById(R.id.actionBtn);
         startBtn.setText("Start Timer");
         startBtn.setOnClickListener(v -> {
-            if (!startBtn.getText().toString().equals("Stop Timer")) { //start
+            if (startBtn.getText().toString().equals("Start Timer")) { //start
                 startBtn.setText("Stop Timer");
                 //adapter.setTimer(true);
             }
-            else { //stop
+            else if (startBtn.getText().toString().equals("Stop Timer")) { //stop
                 startBtn.setText("Reset Timer");
                 //adapter.setTimer(false);
+            }
+            else { //reset
+                startBtn.setText("Start Timer");
             }
         });
     }

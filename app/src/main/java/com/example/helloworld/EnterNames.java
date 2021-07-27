@@ -25,7 +25,7 @@ public class EnterNames extends AppCompatActivity {
 
         ArrayList<Swimmer> swimmers = new ArrayList<>();
         for (int i = 0; i < numberOfSwimmers; i++) {
-            swimmers.add(new Swimmer("Swimmer" + (i+1)));
+            swimmers.add(new Swimmer("Swimmer " + (i+1)));
         }
 
         SwimmerRecViewAdapter adapter = new SwimmerRecViewAdapter(this, 1);

@@ -2,6 +2,7 @@ package com.example.helloworld;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -27,17 +28,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
     private static ArrayList<Swimmer> swimmers = new ArrayList<>();
     private int type;
     private Context context;
-    /*
-    private Stopwatch stopwatch = Stopwatch.createUnstarted(
-        new Ticker() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-            @Override
-            public long read() {
-                return android.os.SystemClock.elapsedRealtimeNanos();
-            }
-        }
-    );
-    */
+    private boolean isRunning = false;
 
     public SwimmerRecViewAdapter(Context context, int layoutType) {
         type = layoutType;
@@ -58,16 +49,20 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         this.swimmers = swimmers;
         notifyDataSetChanged();
     }
-    /*
-    public void setTimer (boolean startStop) {
-        if (startStop) {
-            stopwatch.start();
+
+    public void setTimer (int startStop) {
+        if (startStop == 1) {
+            isRunning = true;
+        }
+        else if (startStop == 2) {
+            isRunning = false;
         }
         else {
-            stopwatch.stop();
+            isRunning = false;
+            // TODO reset time
         }
     }
-    */
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -89,7 +84,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder1) {
+        if (holder instanceof ViewHolder1) { //Enter Names
             ((ViewHolder1) holder).txtlaneNumber.setText(position + 1 + "");
             ((ViewHolder1) holder).editName.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -108,14 +103,9 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
                 }
             });
         }
-        else if (holder instanceof ViewHolder2) {
-
-            // TODO figure out how to make this constantly update
-            //((ViewHolder2) holder).txtTimer.setText("" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
-
+        else if (holder instanceof ViewHolder2) { //Timer
             ((ViewHolder2) holder).txtName.setText(swimmers.get(position).getName());
             ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
-
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
                 //if (stopwatch.isRunning()) {
                 //    swimmers.get(position).addLaps(stopwatch.elapsed(TimeUnit.MILLISECONDS));
@@ -123,7 +113,30 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
                 //Toast.makeText(context, "Split Button Clicked", Toast.LENGTH_SHORT).show();
                 //}
             });
+            runTimer();
+            // TODO figure out how to make this constantly update
+            //((ViewHolder2) holder).txtTimer.setText("" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
         }
+    }
+
+    private void runTimer() {
+        final Handler handler = new Handler();
+
+        handler.post(new Runnable () {
+            @Override
+            public void run() {
+                Stopwatch stopwatch = Stopwatch.createUnstarted(
+                        new Ticker() {
+                            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+                            @Override
+                            public long read() {
+                                return android.os.SystemClock.elapsedRealtimeNanos();
+                            }
+                        }
+                );
+
+            }
+        });
     }
 
     public class ViewHolder2 extends RecyclerView.ViewHolder {
