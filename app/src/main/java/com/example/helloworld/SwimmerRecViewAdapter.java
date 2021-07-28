@@ -1,5 +1,6 @@
 package com.example.helloworld;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
@@ -51,9 +52,14 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void setCurrentTimer(long currentCentiseconds) {
-        this.currentCentiseconds = currentCentiseconds;
-        notifyDataSetChanged();
+    public void setCurrentTimer(long getCurrentCentiseconds, Runnable runnable) {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                currentCentiseconds = getCurrentCentiseconds;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     @NonNull
@@ -76,7 +82,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (holder instanceof ViewHolder1) { //Enter Names
             ((ViewHolder1) holder).txtlaneNumber.setText(position + 1 + "");
             ((ViewHolder1) holder).editName.addTextChangedListener(new TextWatcher() {
@@ -101,8 +107,10 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
             ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
 
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
-                Toast.makeText(context, "Split", Toast.LENGTH_SHORT).show();
-                swimmers.get(position).addLaps(currentCentiseconds);
+                Toast.makeText(context, "" + currentCentiseconds, Toast.LENGTH_SHORT).show();
+                if (currentCentiseconds != 0) {
+                    swimmers.get(position).addLaps(currentCentiseconds);
+                }
             });
         }
     }

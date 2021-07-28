@@ -1,17 +1,15 @@
 package com.example.helloworld;
 
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.base.Ticker;
@@ -84,10 +82,10 @@ public class Timer extends AppCompatActivity {
         @Override
         public void run() {
             long currentCentiseconds = stopwatch.elapsed(TimeUnit.MILLISECONDS) / 10;
-            //adapter.setCurrentTimer(currentCentiseconds);
+            adapter.setCurrentTimer(currentCentiseconds, runnable);
 
             seconds = (int) (currentCentiseconds / 100);
-            minutes = (int) (seconds / 60);
+            minutes = seconds / 60;
             seconds = seconds % 60;
             centiseconds =  (int) (currentCentiseconds % 100);
 

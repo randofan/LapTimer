@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.helloworld">
+    package="com.example.helloworld" >
 
     <application
         android:allowBackup="true"
@@ -8,26 +8,29 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HelloWorld">
+        android:theme="@style/Theme.HelloWorld" >
         <activity
             android:name=".SwimmerDetails"
-            android:label="@string/title_activity_swimmer_details"
-            android:theme="@style/Theme.HelloWorld.NoActionBar"></activity>
+            android:parentActivityName=".Timer" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Timer" />
+        </activity>
         <activity
             android:name=".Timer"
-            android:parentActivityName=".EnterNames">
+            android:parentActivityName=".EnterNames" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".EnterNames" />
         </activity>
         <activity
             android:name=".EnterNames"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
