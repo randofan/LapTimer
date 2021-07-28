@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HelloWorld">
         <activity
+            android:name=".SwimmerDetails"
+            android:label="@string/title_activity_swimmer_details"
+            android:theme="@style/Theme.HelloWorld.NoActionBar"></activity>
+        <activity
             android:name=".Timer"
             android:parentActivityName=".EnterNames">
             <meta-data

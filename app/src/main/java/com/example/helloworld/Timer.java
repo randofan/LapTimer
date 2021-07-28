@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,10 +68,15 @@ public class Timer extends AppCompatActivity {
                 stopwatch.stop();
                 handler.removeCallbacks(runnable);
             }
-            else { //reset
+            else { //reset TODO change to next
                 startBtn.setText("Start Timer");
                 stopwatch.reset();
                 txtTimer.setText("00:00.00");
+
+//                startBtn.setText("Next");
+//                Intent intent = new Intent(Timer.this, SwimmerDetails.class);
+//                intent.putParcelableArrayListExtra("SWIMMERS", swimmers);
+//                startActivity(intent);
             }
         });
     }
@@ -78,7 +84,7 @@ public class Timer extends AppCompatActivity {
         @Override
         public void run() {
             long currentCentiseconds = stopwatch.elapsed(TimeUnit.MILLISECONDS) / 10;
-            adapter.setCurrentTimer(currentCentiseconds);
+            //adapter.setCurrentTimer(currentCentiseconds);
 
             seconds = (int) (currentCentiseconds / 100);
             minutes = (int) (seconds / 60);
