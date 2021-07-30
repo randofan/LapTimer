@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,10 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item2, parent, false);
             return new ViewHolder2(view, viewType);
         }
+        else if (viewType == 3) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item3, parent, false);
+            return new ViewHolder3(view, viewType);
+        }
         else  {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item, parent, false);
             return new ViewHolder1(view, viewType);
@@ -101,7 +106,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
             ((ViewHolder2) holder).txtName.setText(swimmers.get(position).getName());
             ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
 
-
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
                 Toast.makeText(context, "" + currentCentiseconds, Toast.LENGTH_SHORT).show();
                 if (currentCentiseconds != 0) {
@@ -109,6 +113,28 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
                     ((ViewHolder2) holder).txtSplit.setText(clockTime);
                 }
             });
+        }
+        else if (holder instanceof ViewHolder3) { //Swimmer Details
+            ((ViewHolder3) holder).txtname.setText(swimmers.get(position).getName());
+            ((ViewHolder3) holder).txtlaneNumber.setText(position + 1 + "");
+
+            ((ViewHolder3) holder).expandIBtn.setOnClickListener(v -> {
+                // TODO make an expandable dropdown with splits
+            });
+        }
+    }
+
+    public class ViewHolder3 extends RecyclerView.ViewHolder {
+
+        private TextView txtlaneNumber;
+        private TextView txtname;
+        private ImageButton expandIBtn;
+
+        public ViewHolder3 (@NonNull View itemView, int viewType) {
+            super(itemView);
+            txtlaneNumber = itemView.findViewById(R.id.txtlaneNumber);
+            txtname = itemView.findViewById(R.id.txtName);
+            expandIBtn = itemView.findViewById(R.id.expandIBtn);
         }
     }
 

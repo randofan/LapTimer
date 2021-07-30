@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:id="@+id/expandBtn"
+            android:id="@+id/expandIBtn"
             android:src="@drawable/ic_expand_item_down"/>
 
     </RelativeLayout>

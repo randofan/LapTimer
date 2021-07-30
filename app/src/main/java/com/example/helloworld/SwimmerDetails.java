@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class SwimmerDetails extends AppCompatActivity {
 
     private RecyclerView swimmerRecview;
     private SwimmerRecViewAdapter adapter;
+    private Button resetBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,5 +27,11 @@ public class SwimmerDetails extends AppCompatActivity {
 
         swimmerRecview.setAdapter(adapter);
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
+
+        resetBtn = findViewById(R.id.actionBtn);
+        resetBtn.setOnClickListener(v -> {
+            // TODO go back to MainActivity
+        });
+
     }
 }

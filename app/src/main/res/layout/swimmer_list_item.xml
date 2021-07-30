@@ -26,7 +26,7 @@
             android:layout_toRightOf="@+id/txtlaneNumber"
             android:layout_marginLeft="15dp"
             android:textSize="20sp"
-            android:hint="Swimmer Name"
+            android:hint="Swimmer Name (Optional)"
             android:id="@+id/editName"
             android:visibility="visible"/>
 
