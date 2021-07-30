@@ -38,8 +38,8 @@ public class Swimmer implements Parcelable {
         return name;
     }
 
-    public void addLaps(long overallTime) {
-        laps.add(new Lap(overallTime, laps.size()));
+    public void addLaps(long overallTime, String clockTime) {
+        laps.add(new Lap(overallTime, laps.size(), clockTime));
         if (laps.size() == 1) {
             laps.get(laps.size()-1).setSplitTime(overallTime);
         }
@@ -69,10 +69,12 @@ public class Swimmer implements Parcelable {
         private int lapNumber;
         private long overallTime;
         private long splitTime;
+        private String clockTime;
 
-        public Lap(long overallTime, int lapNumber) {
+        public Lap(long overallTime, int lapNumber, String clockTime) {
             this.overallTime = overallTime;
             this.lapNumber = lapNumber;
+            this.clockTime = clockTime;
         }
         public void setSplitTime (long splitTime) {
             this.splitTime = splitTime;

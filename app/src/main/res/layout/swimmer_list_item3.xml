@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:id="@+id/txtlaneNumber"
-            android:textSize="40sp"
+            android:textSize="25sp"
             android:visibility="visible"/>
 
         <TextView
@@ -26,29 +26,16 @@
             android:layout_toRightOf="@+id/txtlaneNumber"
             android:layout_marginLeft="15dp"
             android:textSize="20sp"
-            android:text="Swimmer Name"
             android:id="@+id/txtName"
             android:visibility="visible"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_below="@id/txtName"
-            android:layout_toRightOf="@id/txtlaneNumber"
-            android:layout_marginLeft="15dp"
-            android:id="@+id/txtSplit" />
-
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="Lap"
-            android:id="@+id/splitBtn"
-            android:visibility="visible"/>
+            android:id="@+id/expandBtn"
+            android:src="@drawable/ic_expand_item_down"/>
 
     </RelativeLayout>
-
-
 
 </androidx.cardview.widget.CardView>

@@ -30,6 +30,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
     private int type;
     private Context context;
     private long currentCentiseconds = 0;
+    private String clockTime;
 
     public SwimmerRecViewAdapter(Context context, int layoutType) {
         type = layoutType;
@@ -48,18 +49,13 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
 
     public void setSwimmers(ArrayList<Swimmer> swimmers) {
         this.swimmers = swimmers;
-
         notifyDataSetChanged();
     }
 
-    public void setCurrentTimer(long getCurrentCentiseconds, Runnable runnable) {
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                currentCentiseconds = getCurrentCentiseconds;
-                notifyDataSetChanged();
-            }
-        };
+    public void setCurrentTimer(long currentCentiseconds, String clockTime) {
+        this.currentCentiseconds = currentCentiseconds;
+        this.clockTime = clockTime;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -75,7 +71,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
             return new ViewHolder2(view, viewType);
         }
         else  {
-            // TODO change to default setting
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item, parent, false);
             return new ViewHolder1(view, viewType);
         }
@@ -106,10 +101,12 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
             ((ViewHolder2) holder).txtName.setText(swimmers.get(position).getName());
             ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
 
+
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
                 Toast.makeText(context, "" + currentCentiseconds, Toast.LENGTH_SHORT).show();
                 if (currentCentiseconds != 0) {
-                    swimmers.get(position).addLaps(currentCentiseconds);
+                    swimmers.get(position).addLaps(currentCentiseconds, clockTime);
+                    ((ViewHolder2) holder).txtSplit.setText(clockTime);
                 }
             });
         }
@@ -120,13 +117,14 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         private TextView txtlaneNumber;
         private TextView txtName;
         private Button splitBtn;
+        private TextView txtSplit;
 
         public ViewHolder2(@NonNull View itemView, int viewType) {
             super(itemView);
             txtlaneNumber = itemView.findViewById(R.id.txtlaneNumber);
             txtName = itemView.findViewById(R.id.txtName);
-
             splitBtn = itemView.findViewById(R.id.splitBtn);
+            txtSplit = itemView.findViewById(R.id.txtSplit);
         }
     }
 

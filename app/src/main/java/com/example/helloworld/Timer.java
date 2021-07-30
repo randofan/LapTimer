@@ -1,5 +1,6 @@
 package com.example.helloworld;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,19 +63,14 @@ public class Timer extends AppCompatActivity {
                 handler.post(runnable);
             }
             else if (startBtn.getText().toString().equals("Stop Timer")) { //stop
-                startBtn.setText("Reset Timer");
+                startBtn.setText("Next");
                 stopwatch.stop();
                 handler.removeCallbacks(runnable);
             }
-            else { //reset TODO change to next
-                startBtn.setText("Start Timer");
-                stopwatch.reset();
-                txtTimer.setText("00:00.00");
-
-//                startBtn.setText("Next");
-//                Intent intent = new Intent(Timer.this, SwimmerDetails.class);
-//                intent.putParcelableArrayListExtra("SWIMMERS", swimmers);
-//                startActivity(intent);
+            else { //next
+                Intent intent = new Intent(Timer.this, SwimmerDetails.class);
+                intent.putParcelableArrayListExtra("SWIMMERS", swimmers);
+                startActivity(intent);
             }
         });
     }
@@ -82,14 +78,15 @@ public class Timer extends AppCompatActivity {
         @Override
         public void run() {
             long currentCentiseconds = stopwatch.elapsed(TimeUnit.MILLISECONDS) / 10;
-            adapter.setCurrentTimer(currentCentiseconds, runnable);
 
             seconds = (int) (currentCentiseconds / 100);
             minutes = seconds / 60;
             seconds = seconds % 60;
             centiseconds =  (int) (currentCentiseconds % 100);
 
-            txtTimer.setText(String.format("%d:%02d.%02d", minutes,seconds,centiseconds));
+            String s = String.format("%d:%02d.%02d", minutes,seconds,centiseconds);
+            adapter.setCurrentTimer(currentCentiseconds, s);
+            txtTimer.setText(s);
             
             handler.postDelayed(runnable, 10);
         }
