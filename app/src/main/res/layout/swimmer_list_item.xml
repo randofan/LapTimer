@@ -18,10 +18,11 @@
             android:layout_alignParentLeft="true"
             android:id="@+id/txtlaneNumber"
             android:textSize="25sp"
+            android:paddingTop="5dp"
             android:visibility="visible"/>
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/txtlaneNumber"
             android:layout_marginLeft="15dp"

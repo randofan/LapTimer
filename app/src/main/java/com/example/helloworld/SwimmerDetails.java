@@ -30,9 +30,9 @@ public class SwimmerDetails extends AppCompatActivity {
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
 
         resetBtn = findViewById(R.id.actionBtn);
+        resetBtn.setText("Reset");
         resetBtn.setOnClickListener(v -> {
-            navigateUpTo(new Intent(SwimmerDetails.this, MainActivity.class));
-            startActivity(getIntent());
+            startActivity(new Intent(SwimmerDetails.this, MainActivity.class));
         });
 
     }
