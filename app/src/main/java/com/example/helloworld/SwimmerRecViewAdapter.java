@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.common.base.Stopwatch;
@@ -81,6 +82,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (holder instanceof ViewHolder1) { //Enter Names
@@ -118,8 +120,22 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
             ((ViewHolder3) holder).txtname.setText(swimmers.get(position).getName());
             ((ViewHolder3) holder).txtlaneNumber.setText(position + 1 + "");
 
+            SplitListRecViewAdapter adapter = new SplitListRecViewAdapter();
+            adapter.setLaps(swimmers.get(position).getLaps());
+
+            ((ViewHolder3) holder).splitList.setAdapter(adapter);
+            ((ViewHolder3) holder).splitList.setLayoutManager(new LinearLayoutManager(context));
+
             ((ViewHolder3) holder).expandIBtn.setOnClickListener(v -> {
-                // TODO make an expandable dropdown with splits
+                if (((ViewHolder3) holder).splitList.getVisibility() != View.VISIBLE) {
+                    ((ViewHolder3) holder).splitList.setVisibility(View.VISIBLE);
+                    ((ViewHolder3) holder).expandIBtn.setImageDrawable(this.context.getDrawable(R.drawable.ic_expand_item_up));
+                }
+                else {
+                    ((ViewHolder3) holder).splitList.setVisibility(View.GONE);
+                    ((ViewHolder3) holder).expandIBtn.setImageDrawable(this.context.getDrawable(R.drawable.ic_expand_item_down));
+                }
+
             });
         }
     }
@@ -129,12 +145,14 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         private TextView txtlaneNumber;
         private TextView txtname;
         private ImageButton expandIBtn;
+        private RecyclerView splitList;
 
         public ViewHolder3 (@NonNull View itemView, int viewType) {
             super(itemView);
             txtlaneNumber = itemView.findViewById(R.id.txtlaneNumber);
             txtname = itemView.findViewById(R.id.txtName);
             expandIBtn = itemView.findViewById(R.id.expandIBtn);
+            splitList = itemView.findViewById(R.id.splitList);
         }
     }
 

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -30,7 +31,8 @@ public class SwimmerDetails extends AppCompatActivity {
 
         resetBtn = findViewById(R.id.actionBtn);
         resetBtn.setOnClickListener(v -> {
-            // TODO go back to MainActivity
+            navigateUpTo(new Intent(SwimmerDetails.this, MainActivity.class));
+            startActivity(getIntent());
         });
 
     }

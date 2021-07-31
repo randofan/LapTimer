@@ -49,6 +49,11 @@ public class Swimmer implements Parcelable {
 
     }
 
+    public ArrayList<Lap> getLaps () {
+        laps.add(0, null);
+        return laps;
+    }
+
     protected Swimmer(Parcel in) {
         name = in.readString();
         laps = in.readArrayList(null);
@@ -65,22 +70,34 @@ public class Swimmer implements Parcelable {
         dest.writeList(laps);
     }
 
-    private class Lap {
+    public class Lap {
         private int lapNumber;
         private long overallTime;
         private long splitTime;
-        private String clockTime;
+        private String overallClockTime;
 
         public Lap(long overallTime, int lapNumber, String clockTime) {
             this.overallTime = overallTime;
             this.lapNumber = lapNumber;
-            this.clockTime = clockTime;
+            this.overallClockTime = clockTime;
         }
         public void setSplitTime (long splitTime) {
             this.splitTime = splitTime;
         }
         public long getOverallTime () {
             return overallTime;
+        }
+        public String getOverallClockTime () {
+            return overallClockTime;
+        }
+        public String getSplitClockTime () {
+
+            int seconds = (int) (splitTime / 100);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+            int centiseconds =  (int) (splitTime % 100);
+
+            return String.format("%d:%02d.%02d", minutes,seconds,centiseconds);
         }
     }
 }
