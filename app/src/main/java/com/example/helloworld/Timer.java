@@ -84,7 +84,8 @@ public class Timer extends AppCompatActivity {
             seconds = seconds % 60;
             centiseconds =  (int) (currentCentiseconds % 100);
 
-            String s = String.format("%0d:%02d.%02d", minutes,seconds,centiseconds);
+            String s = String.format("%02d:%02d.%02d", minutes,seconds,centiseconds);
+
             adapter.setCurrentTimer(currentCentiseconds, s);
             txtTimer.setText(s);
             
