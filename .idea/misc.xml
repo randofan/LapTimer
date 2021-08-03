@@ -4,13 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/drawable-anydpi/ic_expand_item_up.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/layout/activity_instructions.xml" value="0.240625" />
         <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/layout/activity_main.xml" value="0.21422101449275363" />
+        <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/layout/activity_settings.xml" value="0.2546875" />
         <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/layout/activity_swimmer_details.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/layout/activity_timer.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/layout/lap_list_item.xml" value="0.2546875" />
         <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/layout/swimmer_list_item.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/layout/swimmer_list_item2.xml" value="0.268" />
         <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/layout/swimmer_list_item3.xml" value="0.268" />
+        <entry key="..\:/Users/david/Documents/AndroidProjects/HelloWorld/app/src/main/res/menu/main_menu.xml" value="0.2546875" />
       </map>
     </option>
   </component>
