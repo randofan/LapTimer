@@ -17,8 +17,9 @@ import com.google.common.base.Ticker;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class Timer extends AppCompatActivity {
+public class Timer extends AppCompatActivity implements TimerInterface {
 
     private Button startBtn;
     private RecyclerView swimmerRecview;
@@ -65,6 +66,7 @@ public class Timer extends AppCompatActivity {
             else if (startBtn.getText().toString().equals("Stop Timer")) { //stop
                 startBtn.setText("Next");
                 stopwatch.stop();
+                currentCentiseconds.set(0);
                 handler.removeCallbacks(runnable);
             }
             else { //next
@@ -74,20 +76,27 @@ public class Timer extends AppCompatActivity {
             }
         });
     }
-    private Runnable runnable = new Runnable() {
+
+    @Override
+    public void setCurrentCentiseconds(AtomicLong currentCentiseconds) {
+    }
+
+    @Override
+    public AtomicLong getCurrentCentiseconds() {
+        return currentCentiseconds;
+    }
+
+    public Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            long currentCentiseconds = stopwatch.elapsed(TimeUnit.MILLISECONDS) / 10;
+            currentCentiseconds.set(stopwatch.elapsed(TimeUnit.MILLISECONDS) / 10);
 
-            seconds = (int) (currentCentiseconds / 100);
+            seconds = (int) (currentCentiseconds.longValue() / 100);
             minutes = seconds / 60;
             seconds = seconds % 60;
-            centiseconds =  (int) (currentCentiseconds % 100);
+            centiseconds =  (int) (currentCentiseconds.longValue() % 100);
 
-            String s = String.format("%02d:%02d.%02d", minutes,seconds,centiseconds);
-
-            adapter.setCurrentTimer(currentCentiseconds, s);
-            txtTimer.setText(s);
+            txtTimer.setText(String.format("%02d:%02d.%02d", minutes,seconds,centiseconds));
             
             handler.postDelayed(runnable, 10);
         }

@@ -3,7 +3,6 @@ package com.example.helloworld;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,26 +12,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.common.base.Stopwatch;
-import com.google.common.base.Ticker;
-
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
+public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements TimerInterface {
 
     private static ArrayList<Swimmer> swimmers = new ArrayList<>();
     private int type;
     private Context context;
-    private long currentCentiseconds = 0;
-    private String clockTime;
+//    private long currentCentiseconds = 0;
+//    private String clockTime;
 
     public SwimmerRecViewAdapter(Context context, int layoutType) {
         type = layoutType;
@@ -54,10 +49,14 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void setCurrentTimer(long currentCentiseconds, String clockTime) {
-        this.currentCentiseconds = currentCentiseconds;
-        this.clockTime = clockTime;
-        notifyDataSetChanged();
+    @Override
+    public void setCurrentCentiseconds(AtomicLong currentCentiseconds) {
+
+    }
+
+    @Override
+    public AtomicLong getCurrentCentiseconds() {
+        return null;
     }
 
     @NonNull
@@ -109,10 +108,15 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter {
             ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
 
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
-                Toast.makeText(context, "" + currentCentiseconds, Toast.LENGTH_SHORT).show();
-                if (currentCentiseconds != 0) {
-                    swimmers.get(position).addLaps(currentCentiseconds, clockTime);
-                    ((ViewHolder2) holder).txtSplit.setText(clockTime);
+                if (currentCentiseconds.longValue() != 0) {
+                    swimmers.get(position).addLaps(currentCentiseconds.longValue());
+
+                    int seconds = (int) (currentCentiseconds.longValue() / 100);
+                    int minutes = seconds / 60;
+                    seconds = seconds % 60;
+                    int centiseconds =  (int) (currentCentiseconds.longValue() % 100);
+
+                    ((ViewHolder2) holder).txtSplit.setText(String.format("%02d:%02d.%02d", minutes,seconds,centiseconds));
                 }
             });
         }
