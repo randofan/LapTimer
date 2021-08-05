@@ -5,8 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:id="@+id/parent"
-    app:cardElevation="10dp"
-    app:cardCornerRadius="10dp" >
+    app:cardElevation="1dp"
+    android:layout_margin="3dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,8 +18,9 @@
             android:layout_alignParentLeft="true"
             android:id="@+id/txtlaneNumber"
             android:textSize="25sp"
+            android:layout_marginLeft="15dp"
             android:text="1"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,23 +30,43 @@
             android:textSize="25sp"
             android:id="@+id/txtName"
             android:text="Hello"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
-        <ImageButton
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:id="@+id/expandIBtn"
+            android:id="@+id/expandImg"
+            android:layout_marginTop="5dp"
             android:contentDescription="List of splits"
-            android:src="@drawable/ic_expand_item_down"/>
+            android:src="@drawable/ic_expand_item_down" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/splits"
             android:layout_below="@id/txtName"
-            android:layout_marginLeft="30dp"
             android:visibility="gone"
-            android:id="@+id/splitList"/>
+            android:layout_marginBottom="5dp" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:id="@+id/line"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/splitList"
+                android:layout_below="@+id/line" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

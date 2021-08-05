@@ -18,7 +18,7 @@ public class EnterNames extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { // TODO save instance for each stage in recycler view
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);              // TODO scale everything with size of screen
         setContentView(R.layout.activity_enter_names);
         int numberOfSwimmers = getIntent().getIntExtra("NUMBER_OF_SWIMMERS", 0);
 
@@ -33,7 +33,7 @@ public class EnterNames extends AppCompatActivity {
         adapter.setSwimmers(swimmers);
         swimmerRecview.setAdapter(adapter);
 
-        swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
+        swimmerRecview.setLayoutManager(new LinearLayoutManager(this)); // TODO switch to grid for horizontal
 
         nextBtn = findViewById(R.id.actionBtn);
         nextBtn.setOnClickListener(v -> {

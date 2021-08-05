@@ -55,6 +55,10 @@ public class Swimmer implements Parcelable {
         return laps;
     }
 
+    public ArrayList<Lap> getExistingLaps() {
+        return laps;
+    }
+
     public Swimmer(Parcel in) {
         this.name = in.readString();
         this.laps = in.readArrayList(Lap.class.getClassLoader());

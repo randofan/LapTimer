@@ -27,7 +27,7 @@ public class SplitListRecViewAdapter extends RecyclerView.Adapter<SplitListRecVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (position != 0) {
+        if (position != 0 && laps.get(position) != null)  {
             holder.splitNumber.setText("" + position);
             holder.split.setText(laps.get(position).getSplitClockTime());
             holder.overallTime.setText(laps.get(position).getOverallClockTime());

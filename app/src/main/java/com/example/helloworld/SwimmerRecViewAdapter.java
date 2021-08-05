@@ -11,10 +11,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,8 +29,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
     private static ArrayList<Swimmer> swimmers = new ArrayList<>();
     private int type;
     private Context context;
-//    private long currentCentiseconds = 0;
-//    private String clockTime;
 
     public SwimmerRecViewAdapter(Context context, int layoutType) {
         type = layoutType;
@@ -86,6 +87,9 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
     public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (holder instanceof ViewHolder1) { //Enter Names
             ((ViewHolder1) holder).txtlaneNumber.setText(position + 1 + "");
+            if (position == 0) {
+                ((ViewHolder1) holder).editName.setHint("Swimmer Name (Optional)");
+            }
             ((ViewHolder1) holder).editName.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -115,8 +119,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
                     int minutes = seconds / 60;
                     seconds = seconds % 60;
                     int centiseconds =  (int) (currentCentiseconds.longValue() % 100);
-
-                    ((ViewHolder2) holder).txtSplit.setText(String.format("%02d:%02d.%02d", minutes,seconds,centiseconds));
+                    ((ViewHolder2) holder).txtSplit.setText("Lap "  + swimmers.get(position).getExistingLaps().size() + ": " + String.format("%02d:%02d.%02d", minutes,seconds,centiseconds));
                 }
             });
         }
@@ -130,14 +133,14 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
             ((ViewHolder3) holder).splitList.setAdapter(adapter);
             ((ViewHolder3) holder).splitList.setLayoutManager(new LinearLayoutManager(context));
 
-            ((ViewHolder3) holder).expandIBtn.setOnClickListener(v -> {
-                if (((ViewHolder3) holder).splitList.getVisibility() != View.VISIBLE) {
-                    ((ViewHolder3) holder).splitList.setVisibility(View.VISIBLE);
-                    ((ViewHolder3) holder).expandIBtn.setImageDrawable(this.context.getDrawable(R.drawable.ic_expand_item_up));
+            ((ViewHolder3) holder).parent.setOnClickListener(v -> {
+                if (((ViewHolder3) holder).splits.getVisibility() != View.VISIBLE) {
+                    ((ViewHolder3) holder).splits.setVisibility(View.VISIBLE);
+                    ((ViewHolder3) holder).expandImg.setRotation(180);
                 }
                 else {
-                    ((ViewHolder3) holder).splitList.setVisibility(View.GONE);
-                    ((ViewHolder3) holder).expandIBtn.setImageDrawable(this.context.getDrawable(R.drawable.ic_expand_item_down));
+                    ((ViewHolder3) holder).splits.setVisibility(View.GONE);
+                    ((ViewHolder3) holder).expandImg.setRotation(0);
                 }
 
             });
@@ -148,15 +151,19 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
 
         private TextView txtlaneNumber;
         private TextView txtname;
-        private ImageButton expandIBtn;
+        private ImageView expandImg;
         private RecyclerView splitList;
+        private CardView parent;
+        private RelativeLayout splits;
 
         public ViewHolder3 (@NonNull View itemView, int viewType) {
             super(itemView);
             txtlaneNumber = itemView.findViewById(R.id.txtlaneNumber);
+            parent = itemView.findViewById(R.id.parent);
             txtname = itemView.findViewById(R.id.txtName);
-            expandIBtn = itemView.findViewById(R.id.expandIBtn);
+            expandImg = itemView.findViewById(R.id.expandImg);
             splitList = itemView.findViewById(R.id.splitList);
+            splits = itemView.findViewById(R.id.splits);
         }
     }
 

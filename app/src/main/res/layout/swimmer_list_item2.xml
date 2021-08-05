@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:id="@+id/parent"
-    app:cardElevation="10dp"
-    app:cardCornerRadius="10dp" >
+    app:cardElevation="1dp"
+    android:layout_margin="3dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -18,7 +18,9 @@
             android:layout_alignParentLeft="true"
             android:id="@+id/txtlaneNumber"
             android:textSize="40sp"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            android:paddingLeft="15dp"
+            android:layout_centerVertical="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="Lap"
+            android:layout_centerVertical="true"
             android:id="@+id/splitBtn"
+            android:layout_marginRight="15dp"
             android:visibility="visible"/>
 
     </RelativeLayout>
