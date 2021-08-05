@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class SplitListRecViewAdapter extends RecyclerView.Adapter<SplitListRecViewAdapter.ViewHolder> {
 
-    private ArrayList<Swimmer.Lap> laps = new ArrayList<>();
+    private ArrayList<Lap> laps = new ArrayList<>();
 
     public SplitListRecViewAdapter () {
 
@@ -38,7 +38,7 @@ public class SplitListRecViewAdapter extends RecyclerView.Adapter<SplitListRecVi
     public int getItemCount() {
         return laps.size();
     }
-    public void setLaps (ArrayList<Swimmer.Lap> laps) {
+    public void setLaps (ArrayList<Lap> laps) {
         this.laps = laps;
         notifyDataSetChanged();
     }

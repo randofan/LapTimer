@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerSwimmers.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                numberOfSwimmers = position;
+                numberOfSwimmers = position; //position = 0 is ' ' so numbers = position
             }
 
             @Override
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         nextBtn = findViewById(R.id.nextBtn);
         nextBtn.setOnClickListener(v -> {
-            if (numberOfSwimmers != 0) {
+            if (numberOfSwimmers != 0) { //reject is nothing is selected
                 Intent intent = new Intent(MainActivity.this, EnterNames.class);
                 intent.putExtra("NUMBER_OF_SWIMMERS", numberOfSwimmers);
                 startActivity(intent);

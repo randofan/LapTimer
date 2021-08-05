@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Timer extends AppCompatActivity implements TimerInterface {
 
-    private Button startBtn;
+    private Button actionBtn;
     private RecyclerView swimmerRecview;
     private TextView txtTimer;
     private Handler handler;
@@ -55,21 +55,21 @@ public class Timer extends AppCompatActivity implements TimerInterface {
         txtTimer =  findViewById(R.id.txtTimer);
         handler = new Handler();
 
-        startBtn = findViewById(R.id.actionBtn);
-        startBtn.setText("Start Timer");
-        startBtn.setOnClickListener(v -> {
-            if (startBtn.getText().toString().equals("Start Timer")) { //start
-                startBtn.setText("Stop Timer");
+        actionBtn = findViewById(R.id.actionBtn);
+        actionBtn.setText("Start Timer");
+        actionBtn.setOnClickListener(v -> {
+            if (actionBtn.getText().toString().equals("Start Timer")) { //start button
+                actionBtn.setText("Stop Timer");
                 stopwatch.start();
                 handler.post(runnable);
             }
-            else if (startBtn.getText().toString().equals("Stop Timer")) { //stop
-                startBtn.setText("Next");
+            else if (actionBtn.getText().toString().equals("Stop Timer")) { //stop button
+                actionBtn.setText("Next");
                 stopwatch.stop();
                 currentCentiseconds.set(0);
                 handler.removeCallbacks(runnable);
             }
-            else { //next
+            else { //next button
                 Intent intent = new Intent(Timer.this, SwimmerDetails.class);
                 intent.putParcelableArrayListExtra("SWIMMERS", swimmers);
                 startActivity(intent);
@@ -89,16 +89,16 @@ public class Timer extends AppCompatActivity implements TimerInterface {
     public Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            currentCentiseconds.set(stopwatch.elapsed(TimeUnit.MILLISECONDS) / 10);
+            currentCentiseconds.set(stopwatch.elapsed(TimeUnit.MILLISECONDS) / 10); //currentCentiseconds is AtomicLong inherited from interface
 
-            seconds = (int) (currentCentiseconds.longValue() / 100);
+            seconds = (int) (currentCentiseconds.longValue() / 100); //convert to mm:ss:mm
             minutes = seconds / 60;
             seconds = seconds % 60;
             centiseconds =  (int) (currentCentiseconds.longValue() % 100);
 
             txtTimer.setText(String.format("%02d:%02d.%02d", minutes,seconds,centiseconds));
             
-            handler.postDelayed(runnable, 10);
+            handler.postDelayed(runnable, 10); //10 millisecond delay so the timer goes by 0.01 seconds like stopwatches do
         }
     };
 }

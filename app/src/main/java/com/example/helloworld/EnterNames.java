@@ -17,7 +17,7 @@ public class EnterNames extends AppCompatActivity {
     private SwimmerRecViewAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { // TODO save instance for each stage in recycler view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_names);
         int numberOfSwimmers = getIntent().getIntExtra("NUMBER_OF_SWIMMERS", 0);
@@ -25,8 +25,8 @@ public class EnterNames extends AppCompatActivity {
         swimmerRecview = findViewById(R.id.swimmerRecView);
 
         ArrayList<Swimmer> swimmers = new ArrayList<>();
-        for (int i = 0; i < numberOfSwimmers; i++) {
-            swimmers.add(new Swimmer("Swimmer " + (i+1)));
+        for (int i = 0; i < numberOfSwimmers; i++) { //populates the arraylist of swimmers with laps arraylist
+            swimmers.add(new Swimmer("Swimmer " + (i+1), new ArrayList<>()));
         }
 
         adapter = new SwimmerRecViewAdapter(this, 1);
