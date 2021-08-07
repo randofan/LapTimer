@@ -27,6 +27,7 @@ public class Timer extends AppCompatActivity implements TimerInterface {
     private Handler handler;
     private int minutes, seconds, centiseconds = 0;
     private SwimmerRecViewAdapter adapter;
+    ArrayList<Swimmer> swimmers;
 
     private Stopwatch stopwatch = Stopwatch.createUnstarted(
             new Ticker() {
@@ -43,7 +44,7 @@ public class Timer extends AppCompatActivity implements TimerInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
-        ArrayList<Swimmer> swimmers = getIntent().getParcelableArrayListExtra("SWIMMERS");
+        swimmers = getIntent().getParcelableArrayListExtra("SWIMMERS");
 
         swimmerRecview = findViewById(R.id.swimmerRecView);
         adapter = new SwimmerRecViewAdapter(this, 2);

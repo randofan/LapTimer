@@ -15,20 +15,20 @@ public class EnterNames extends AppCompatActivity {
     private RecyclerView swimmerRecview;
     private Button nextBtn;
     private SwimmerRecViewAdapter adapter;
+    ArrayList<Swimmer> swimmers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { // TODO save instance for each stage in recycler view
         super.onCreate(savedInstanceState);              // TODO scale everything with size of screen
         setContentView(R.layout.activity_enter_names);
+
         int numberOfSwimmers = getIntent().getIntExtra("NUMBER_OF_SWIMMERS", 0);
-
-        swimmerRecview = findViewById(R.id.swimmerRecView);
-
-        ArrayList<Swimmer> swimmers = new ArrayList<>();
+        swimmers = new ArrayList<>();
         for (int i = 0; i < numberOfSwimmers; i++) { //populates the arraylist of swimmers with laps arraylist
-            swimmers.add(new Swimmer("Swimmer " + (i+1), new ArrayList<>()));
+            swimmers.add(new Swimmer("Swimmer " + (i + 1), new ArrayList<>()));
         }
 
+        swimmerRecview = findViewById(R.id.swimmerRecView);
         adapter = new SwimmerRecViewAdapter(this, 1);
         adapter.setSwimmers(swimmers);
         swimmerRecview.setAdapter(adapter);

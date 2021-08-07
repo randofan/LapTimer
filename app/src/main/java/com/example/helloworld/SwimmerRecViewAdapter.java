@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,7 +36,9 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
 
     @Override
     public int getItemCount() {
-        return swimmers.size();
+        if (swimmers != null) return swimmers.size();
+        else return 0;
+
     }
 
     @Override
