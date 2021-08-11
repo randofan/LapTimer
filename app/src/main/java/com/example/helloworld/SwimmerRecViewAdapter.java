@@ -2,6 +2,7 @@ package com.example.helloworld;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,19 +27,23 @@ import java.util.concurrent.atomic.AtomicLong;
 public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements TimerInterface {
 
     private static ArrayList<Swimmer> swimmers = new ArrayList<>();
-    private int type;
-    private Context context;
+    private final int type;
+    private final Context context;
+    private int topMargin;
+    private int bottomMargin;
 
-    public SwimmerRecViewAdapter(Context context, int layoutType) {
-        type = layoutType;
+    public SwimmerRecViewAdapter(Context context, int layoutType, ArrayList<Swimmer> swimmers, int topMargin, int bottomMargin) {
+        this.type = layoutType;
         this.context = context;
+        SwimmerRecViewAdapter.swimmers = swimmers;
+        this.topMargin = topMargin;
+        this.bottomMargin = bottomMargin;
     }
 
     @Override
     public int getItemCount() {
         if (swimmers != null) return swimmers.size();
         else return 0;
-
     }
 
     @Override
@@ -46,19 +51,18 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
         return type;
     }
 
-    public void setSwimmers(ArrayList<Swimmer> swimmers) {
-        this.swimmers = swimmers;
-        notifyDataSetChanged();
-    }
-
     @Override
     public void setCurrentCentiseconds(AtomicLong currentCentiseconds) {
-
     }
 
     @Override
     public AtomicLong getCurrentCentiseconds() {
         return null;
+    }
+
+    private int getViewHolderHeight() {
+        int height = Resources.getSystem().getDisplayMetrics().heightPixels;
+        return (height - this.topMargin - this.bottomMargin) / (swimmers.size() + 1); // TODO size doesn't work properly
     }
 
     @NonNull
@@ -68,7 +72,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item, parent, false);
             return new ViewHolder1(view, viewType);
         }
-
         else if (viewType == 2) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item2, parent, false);
             return new ViewHolder2(view, viewType);
@@ -85,7 +88,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (holder instanceof ViewHolder1) { //Enter Names
             ((ViewHolder1) holder).txtlaneNumber.setText(position + 1 + "");
             if (position == 0) {
@@ -109,9 +112,9 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
             });
         }
         else if (holder instanceof ViewHolder2) { //Timer
+            ((ViewHolder2) holder).parent.getLayoutParams().height = getViewHolderHeight();
             ((ViewHolder2) holder).txtName.setText(swimmers.get(position).getName());
             ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
-
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
                 if (currentCentiseconds.longValue() != 0) {
                     swimmers.get(position).addLaps(currentCentiseconds.longValue());
@@ -121,6 +124,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
                     seconds = seconds % 60;
                     int centiseconds =  (int) (currentCentiseconds.longValue() % 100);
                     ((ViewHolder2) holder).txtSplit.setText("Lap "  + swimmers.get(position).getExistingLaps().size() + ": " + String.format("%02d:%02d.%02d", minutes,seconds,centiseconds));
+                    ((ViewHolder2) holder).txtSplit.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -174,6 +178,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
         private TextView txtName;
         private Button splitBtn;
         private TextView txtSplit;
+        private CardView parent;
 
         public ViewHolder2(@NonNull View itemView, int viewType) {
             super(itemView);
@@ -181,6 +186,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
             txtName = itemView.findViewById(R.id.txtName);
             splitBtn = itemView.findViewById(R.id.splitBtn);
             txtSplit = itemView.findViewById(R.id.txtSplit);
+            parent = itemView.findViewById(R.id.parent);
         }
     }
 
@@ -188,11 +194,13 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
 
         private EditText editName;
         private TextView txtlaneNumber;
+        private CardView parent;
 
         public ViewHolder1(@NonNull View itemView, int viewType) {
             super(itemView);
             editName = itemView.findViewById(R.id.editName);
             txtlaneNumber = itemView.findViewById(R.id.txtlaneNumber);
+            parent = itemView.findViewById(R.id.parent);
         }
     }
 }

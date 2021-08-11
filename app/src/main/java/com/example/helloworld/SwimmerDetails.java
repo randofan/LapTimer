@@ -23,8 +23,7 @@ public class SwimmerDetails extends AppCompatActivity {
         ArrayList<Swimmer> swimmers = getIntent().getParcelableArrayListExtra("SWIMMERS");
 
         swimmerRecview = findViewById(R.id.swimmerRecView);
-        adapter = new SwimmerRecViewAdapter(this, 3);
-        adapter.setSwimmers(swimmers);
+        adapter = new SwimmerRecViewAdapter(this, 3, swimmers, 0, 0);
 
         swimmerRecview.setAdapter(adapter);
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this));

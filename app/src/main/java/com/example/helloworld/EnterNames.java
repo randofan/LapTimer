@@ -19,7 +19,7 @@ public class EnterNames extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { // TODO save instance for each stage in recycler view
-        super.onCreate(savedInstanceState);              // TODO scale everything with size of screen
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_names);
 
         int numberOfSwimmers = getIntent().getIntExtra("NUMBER_OF_SWIMMERS", 0);
@@ -28,14 +28,16 @@ public class EnterNames extends AppCompatActivity {
             swimmers.add(new Swimmer("Swimmer " + (i + 1), new ArrayList<>()));
         }
 
+        nextBtn = findViewById(R.id.actionBtn);
+        nextBtn.measure(0,0);
+
         swimmerRecview = findViewById(R.id.swimmerRecView);
-        adapter = new SwimmerRecViewAdapter(this, 1);
-        adapter.setSwimmers(swimmers);
+        adapter = new SwimmerRecViewAdapter(this, 1, swimmers, 0, 0);
         swimmerRecview.setAdapter(adapter);
 
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this)); // TODO switch to grid for horizontal
 
-        nextBtn = findViewById(R.id.actionBtn);
+
         nextBtn.setOnClickListener(v -> {
             Intent intent = new Intent(EnterNames.this, Timer.class);
             intent.putParcelableArrayListExtra("SWIMMERS", swimmers);

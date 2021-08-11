@@ -46,17 +46,21 @@ public class Timer extends AppCompatActivity implements TimerInterface {
         setContentView(R.layout.activity_timer);
         swimmers = getIntent().getParcelableArrayListExtra("SWIMMERS");
 
+        txtTimer =  findViewById(R.id.txtTimer);
+        txtTimer.measure(0,0);
+
+        actionBtn = findViewById(R.id.actionBtn);
+        actionBtn.measure(0,0);
+
         swimmerRecview = findViewById(R.id.swimmerRecView);
-        adapter = new SwimmerRecViewAdapter(this, 2);
-        adapter.setSwimmers(swimmers);
+        adapter = new SwimmerRecViewAdapter(this, 2, swimmers, txtTimer.getMeasuredHeight(), actionBtn.getMeasuredHeight());
 
         swimmerRecview.setAdapter(adapter);
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
 
-        txtTimer =  findViewById(R.id.txtTimer);
+
         handler = new Handler();
 
-        actionBtn = findViewById(R.id.actionBtn);
         actionBtn.setText("Start Timer");
         actionBtn.setOnClickListener(v -> {
             if (actionBtn.getText().toString().equals("Start Timer")) { //start button
@@ -79,8 +83,7 @@ public class Timer extends AppCompatActivity implements TimerInterface {
     }
 
     @Override
-    public void setCurrentCentiseconds(AtomicLong currentCentiseconds) {
-    }
+    public void setCurrentCentiseconds(AtomicLong currentCentiseconds) {}
 
     @Override
     public AtomicLong getCurrentCentiseconds() {
