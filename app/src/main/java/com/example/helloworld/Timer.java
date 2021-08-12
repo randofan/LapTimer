@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -27,6 +29,7 @@ public class Timer extends AppCompatActivity implements TimerInterface {
     private Handler handler;
     private int minutes, seconds, centiseconds = 0;
     private SwimmerRecViewAdapter adapter;
+    private RelativeLayout timerLayout;
     ArrayList<Swimmer> swimmers;
 
     private Stopwatch stopwatch = Stopwatch.createUnstarted(
@@ -52,12 +55,15 @@ public class Timer extends AppCompatActivity implements TimerInterface {
         actionBtn = findViewById(R.id.actionBtn);
         actionBtn.measure(0,0);
 
+        timerLayout = findViewById(R.id.timerLayout);
+        timerLayout.measure(0,0);
+
         swimmerRecview = findViewById(R.id.swimmerRecView);
-        adapter = new SwimmerRecViewAdapter(this, 2, swimmers, txtTimer.getMeasuredHeight(), actionBtn.getMeasuredHeight());
+        adapter = new SwimmerRecViewAdapter(this, 2, swimmers);
+        adapter.setSize(timerLayout.getMeasuredHeight() + txtTimer.getMeasuredHeight(), actionBtn.getMeasuredHeight());
 
         swimmerRecview.setAdapter(adapter);
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
-
 
         handler = new Handler();
 
@@ -75,19 +81,12 @@ public class Timer extends AppCompatActivity implements TimerInterface {
                 handler.removeCallbacks(runnable);
             }
             else { //next button
+//                Log.d("next activity", "");
                 Intent intent = new Intent(Timer.this, SwimmerDetails.class);
                 intent.putParcelableArrayListExtra("SWIMMERS", swimmers);
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public void setCurrentCentiseconds(AtomicLong currentCentiseconds) {}
-
-    @Override
-    public AtomicLong getCurrentCentiseconds() {
-        return currentCentiseconds;
     }
 
     public Runnable runnable = new Runnable() {

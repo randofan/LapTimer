@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,15 +30,14 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
     private static ArrayList<Swimmer> swimmers = new ArrayList<>();
     private final int type;
     private final Context context;
-    private int topMargin;
-    private int bottomMargin;
+    private static int topMargin;
+    private static int bottomMargin;
+    private static int totalHeight;
 
-    public SwimmerRecViewAdapter(Context context, int layoutType, ArrayList<Swimmer> swimmers, int topMargin, int bottomMargin) {
+    public SwimmerRecViewAdapter(Context context, int layoutType, ArrayList<Swimmer> swimmers) {
         this.type = layoutType;
         this.context = context;
         SwimmerRecViewAdapter.swimmers = swimmers;
-        this.topMargin = topMargin;
-        this.bottomMargin = bottomMargin;
     }
 
     @Override
@@ -51,18 +51,19 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
         return type;
     }
 
-    @Override
-    public void setCurrentCentiseconds(AtomicLong currentCentiseconds) {
+    public void setSize (int topMargin, int bottomMargin) {
+        SwimmerRecViewAdapter.topMargin = topMargin;
+        SwimmerRecViewAdapter.bottomMargin = bottomMargin;
+        SwimmerRecViewAdapter.totalHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+        notifyDataSetChanged();
     }
-
-    @Override
-    public AtomicLong getCurrentCentiseconds() {
-        return null;
-    }
-
-    private int getViewHolderHeight() {
-        int height = Resources.getSystem().getDisplayMetrics().heightPixels;
-        return (height - this.topMargin - this.bottomMargin) / (swimmers.size() + 1); // TODO size doesn't work properly
+    private static int getViewHolderHeight() {
+        int temp = totalHeight - topMargin - bottomMargin;
+//        Log.d("total", "" + totalHeight);   //2088
+//        Log.d("top", "" + topMargin);       //542
+//        Log.d("bottom", "" + bottomMargin); //132
+//        Log.d("usable", "" + temp);         //1414
+        return ((temp) / swimmers.size()); // TODO size doesn't work properly
     }
 
     @NonNull
@@ -92,7 +93,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
         if (holder instanceof ViewHolder1) { //Enter Names
             ((ViewHolder1) holder).txtlaneNumber.setText(position + 1 + "");
             if (position == 0) {
-                ((ViewHolder1) holder).editName.setHint("Swimmer Name (Optional)");
+                ((ViewHolder1) holder).editName.setHint("Participant Name (Optional)");
             }
             ((ViewHolder1) holder).editName.addTextChangedListener(new TextWatcher() {
                 @Override

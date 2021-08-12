@@ -32,7 +32,7 @@ public class EnterNames extends AppCompatActivity {
         nextBtn.measure(0,0);
 
         swimmerRecview = findViewById(R.id.swimmerRecView);
-        adapter = new SwimmerRecViewAdapter(this, 1, swimmers, 0, 0);
+        adapter = new SwimmerRecViewAdapter(this, 1, swimmers);
         swimmerRecview.setAdapter(adapter);
 
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this)); // TODO switch to grid for horizontal
