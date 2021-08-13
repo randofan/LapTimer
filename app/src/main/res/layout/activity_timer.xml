@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/timerLayout"
     tools:context=".Timer">
 
     <TextView
@@ -19,17 +18,27 @@
         android:text="00:00.00"
         android:id="@+id/txtTimer"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/swimmerRecView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtTimer" />
+        android:layout_height="match_parent"
+        android:id="@+id/container"
+        android:layout_above="@id/marginBtn"
+        android:layout_below="@id/txtTimer" >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/swimmerRecView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
 
     <include
         layout="@layout/action_button"
+        android:id="@+id/marginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/swimmerRecView" />
+        android:layout_marginTop="5dp"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

@@ -34,5 +34,6 @@ public class SwimmerDetails extends AppCompatActivity {
             startActivity(new Intent(SwimmerDetails.this, MainActivity.class));
         });
 
+        // TODO create download data option in the action bar for data
     }
 }

@@ -23,9 +23,6 @@ public class Swimmer implements Parcelable {
     private String name;
     private ArrayList<Lap> laps;
 
-    public Swimmer() {
-        laps = new ArrayList<>();
-    }
     public Swimmer (String name, ArrayList<Lap> laps) {
         this.name = name;
         this.laps = laps;
@@ -38,7 +35,7 @@ public class Swimmer implements Parcelable {
         return name;
     }
 
-    public void addLaps(long overallTime) {
+    public void addLaps(long overallTime) { // automatically calculates the split times
         laps.add(new Lap(overallTime, laps.size()));
         if (laps.size() == 1) {
             laps.get(0).setSplitTime(overallTime);
@@ -49,7 +46,7 @@ public class Swimmer implements Parcelable {
 
     }
 
-    public ArrayList<Lap> getLaps () {
+    public ArrayList<Lap> getLaps () { // method used for SplitListRecViewAdapter makes a null first object for header
         laps.add(0, null);
         return laps;
     }

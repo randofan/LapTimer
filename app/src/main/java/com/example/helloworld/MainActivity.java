@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private int numberOfSwimmers = 0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) { // TODO remind user to use vertical for best experience
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         spinnerSwimmers = findViewById(R.id.dropdown_menu);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override // TODO how to make this work
+    @Override // TODO how to make Toast reminder work
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {

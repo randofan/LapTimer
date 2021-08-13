@@ -18,7 +18,7 @@ public class EnterNames extends AppCompatActivity {
     ArrayList<Swimmer> swimmers;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) { // TODO save instance for each stage in recycler view
+    protected void onCreate(Bundle savedInstanceState) { // TODO recreate RecyclerView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_names);
 
@@ -29,14 +29,12 @@ public class EnterNames extends AppCompatActivity {
         }
 
         nextBtn = findViewById(R.id.actionBtn);
-        nextBtn.measure(0,0);
 
         swimmerRecview = findViewById(R.id.swimmerRecView);
         adapter = new SwimmerRecViewAdapter(this, 1, swimmers);
         swimmerRecview.setAdapter(adapter);
 
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this)); // TODO switch to grid for horizontal
-
 
         nextBtn.setOnClickListener(v -> {
             Intent intent = new Intent(EnterNames.this, Timer.class);

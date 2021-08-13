@@ -29,7 +29,7 @@ public class Timer extends AppCompatActivity implements TimerInterface {
     private Handler handler;
     private int minutes, seconds, centiseconds = 0;
     private SwimmerRecViewAdapter adapter;
-    private RelativeLayout timerLayout;
+    private RelativeLayout container;
     ArrayList<Swimmer> swimmers;
 
     private Stopwatch stopwatch = Stopwatch.createUnstarted(
@@ -50,22 +50,19 @@ public class Timer extends AppCompatActivity implements TimerInterface {
         swimmers = getIntent().getParcelableArrayListExtra("SWIMMERS");
 
         txtTimer =  findViewById(R.id.txtTimer);
-        txtTimer.measure(0,0);
-
         actionBtn = findViewById(R.id.actionBtn);
-        actionBtn.measure(0,0);
-
-        timerLayout = findViewById(R.id.timerLayout);
-        timerLayout.measure(0,0);
-
         swimmerRecview = findViewById(R.id.swimmerRecView);
-        adapter = new SwimmerRecViewAdapter(this, 2, swimmers);
-        adapter.setSize(timerLayout.getMeasuredHeight() + txtTimer.getMeasuredHeight(), actionBtn.getMeasuredHeight());
+        container = findViewById(R.id.container);
 
-        swimmerRecview.setAdapter(adapter);
+        adapter = new SwimmerRecViewAdapter(this, 2, swimmers);
+        container.measure(0,0);                 // TODO the RecyclerView adapter size is 0
+        Log.d("recviewheight", "" + container.getMeasuredHeight());  // Edit: tried using a Relative layout but because
+        adapter.setSize(swimmerRecview.getMeasuredHeight());                  // I'm trying to call it in the onCreate, it's size
+        swimmerRecview.setHasFixedSize(true);                                 // is still always 0
+        swimmerRecview.setAdapter(adapter);                                   // Possible solution: https://stackoverflow.com/questions/24430429/getmeasuredheight-and-getmeasuredwidth-returns-0-after-view-measure
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
 
-        handler = new Handler();
+        handler = new Handler(); // controls the Runnable object
 
         actionBtn.setText("Start Timer");
         actionBtn.setOnClickListener(v -> {
@@ -81,7 +78,6 @@ public class Timer extends AppCompatActivity implements TimerInterface {
                 handler.removeCallbacks(runnable);
             }
             else { //next button
-//                Log.d("next activity", "");
                 Intent intent = new Intent(Timer.this, SwimmerDetails.class);
                 intent.putParcelableArrayListExtra("SWIMMERS", swimmers);
                 startActivity(intent);

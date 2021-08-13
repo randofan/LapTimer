@@ -15,7 +15,6 @@ public class SplitListRecViewAdapter extends RecyclerView.Adapter<SplitListRecVi
     private ArrayList<Lap> laps = new ArrayList<>();
 
     public SplitListRecViewAdapter () {
-
     }
 
     @NonNull
@@ -27,7 +26,7 @@ public class SplitListRecViewAdapter extends RecyclerView.Adapter<SplitListRecVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (position != 0 && laps.get(position) != null)  {
+        if (position != 0 && laps.get(position) != null)  { // default value is header so doesn't change the first one
             holder.splitNumber.setText("" + position);
             holder.split.setText(laps.get(position).getSplitClockTime());
             holder.overallTime.setText(laps.get(position).getOverallClockTime());
