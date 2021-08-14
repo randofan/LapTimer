@@ -29,7 +29,6 @@ public class Timer extends AppCompatActivity implements TimerInterface {
     private Handler handler;
     private int minutes, seconds, centiseconds = 0;
     private SwimmerRecViewAdapter adapter;
-    private RelativeLayout container;
     ArrayList<Swimmer> swimmers;
 
     private Stopwatch stopwatch = Stopwatch.createUnstarted(
@@ -52,14 +51,10 @@ public class Timer extends AppCompatActivity implements TimerInterface {
         txtTimer =  findViewById(R.id.txtTimer);
         actionBtn = findViewById(R.id.actionBtn);
         swimmerRecview = findViewById(R.id.swimmerRecView);
-        container = findViewById(R.id.container);
 
         adapter = new SwimmerRecViewAdapter(this, 2, swimmers);
-        container.measure(0,0);                 // TODO the RecyclerView adapter size is 0
-        Log.d("recviewheight", "" + container.getMeasuredHeight());  // Edit: tried using a Relative layout but because
-        adapter.setSize(swimmerRecview.getMeasuredHeight());                  // I'm trying to call it in the onCreate, it's size
-        swimmerRecview.setHasFixedSize(true);                                 // is still always 0
-        swimmerRecview.setAdapter(adapter);                                   // Possible solution: https://stackoverflow.com/questions/24430429/getmeasuredheight-and-getmeasuredwidth-returns-0-after-view-measure
+        swimmerRecview.setHasFixedSize(true);
+        swimmerRecview.setAdapter(adapter);
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
 
         handler = new Handler(); // controls the Runnable object

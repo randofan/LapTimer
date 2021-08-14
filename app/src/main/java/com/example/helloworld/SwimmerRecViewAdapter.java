@@ -30,7 +30,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
     private static ArrayList<Swimmer> swimmers = new ArrayList<>();
     private final int type;
     private final Context context;
-    private static int totalHeight;
 
     public SwimmerRecViewAdapter(Context context, int layoutType, ArrayList<Swimmer> swimmers) {
         this.type = layoutType;
@@ -47,17 +46,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
     @Override
     public int getItemViewType(int position) {
         return type;
-    }
-
-    public void setSize (int size) {
-        totalHeight = size;
-        notifyDataSetChanged();
-    }
-    private static int getViewHolderHeight() {
-        int itemHeight = totalHeight / swimmers.size();
-        Log.d("total height", "" + totalHeight);
-        Log.d("item height", "" + itemHeight);
-        return totalHeight / swimmers.size(); // TODO size doesn't work properly
     }
 
     @NonNull
@@ -107,7 +95,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
             });
         }
         else if (holder instanceof ViewHolder2) { //Timer
-            ((ViewHolder2) holder).parent.getLayoutParams().height = getViewHolderHeight(); // set size of item to fill screen
             ((ViewHolder2) holder).txtName.setText(swimmers.get(position).getName());
             ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
@@ -173,7 +160,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
         private TextView txtName;
         private Button splitBtn;
         private TextView txtSplit;
-        private CardView parent;
 
         public ViewHolder2(@NonNull View itemView, int viewType) {
             super(itemView);
@@ -181,7 +167,6 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
             txtName = itemView.findViewById(R.id.txtName);
             splitBtn = itemView.findViewById(R.id.splitBtn);
             txtSplit = itemView.findViewById(R.id.txtSplit);
-            parent = itemView.findViewById(R.id.parent);
         }
     }
 
