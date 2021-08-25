@@ -32,9 +32,17 @@
         android:paddingLeft="15dp"
         android:paddingTop="60dp"
         android:paddingRight="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
+        android:layout_above="@id/icon_credit"
+        android:layout_marginBottom="20dp"
         android:id="@+id/txtNote" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="15dp"
+        android:text="Logo by Icons8"
+        android:id="@+id/icon_credit" />
 
 
 
