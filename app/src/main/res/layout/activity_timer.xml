@@ -1,36 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="5dp"
     tools:context=".Timer">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:textSize="50sp"
+        android:layout_marginBottom="@dimen/margin_bottom"
+        android:textSize="@dimen/text_size"
         android:textAppearance="@android:style/TextAppearance.Large"
         android:layout_centerHorizontal="true"
         android:text="00:00.00"
         android:id="@+id/txtTimer"/>
 
-    <RelativeLayout
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/swimmerRecView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/container"
+        android:layout_height="wrap_content"
         android:layout_above="@id/marginBtn"
-        android:layout_below="@id/txtTimer" >
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/swimmerRecView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </RelativeLayout>
+        android:layout_below="@id/txtTimer"/>
 
     <include
         layout="@layout/action_button"

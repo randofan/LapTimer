@@ -60,22 +60,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.settingsMenu:
-                startActivity(new Intent(MainActivity.this, Settings.class));
-                return true;
+//            case R.id.settingsMenu:
+//                startActivity(new Intent(MainActivity.this, Settings.class));
+//                return true;
             case R.id.instructionsMenu:
                 startActivity(new Intent(MainActivity.this, Instructions.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override // TODO how to make Toast reminder work
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Toast.makeText(MainActivity.this, "Please orientate your device vertically for the best viewing experience", Toast.LENGTH_LONG).show();
         }
     }
 }

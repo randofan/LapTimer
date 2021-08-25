@@ -30,6 +30,12 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
     private static ArrayList<Swimmer> swimmers = new ArrayList<>();
     private final int type;
     private final Context context;
+    private static int itemHeight;
+
+    public static final int ENTER_NAMES = 1;
+    public static final int TIMER = 2;
+    public static final int SWIMMER_DETAILS = 3;
+
 
     public SwimmerRecViewAdapter(Context context, int layoutType, ArrayList<Swimmer> swimmers) {
         this.type = layoutType;
@@ -48,24 +54,31 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
         return type;
     }
 
+    public void setHeight(int height) {
+        itemHeight = height / swimmers.size();
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == 1) { // EnterNames
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item, parent, false);
-            return new ViewHolder1(view, viewType);
-        }
-        else if (viewType == 2) { // Timer
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item2, parent, false);
-            return new ViewHolder2(view, viewType);
-        }
-        else if (viewType == 3) { // SwimmerDetails
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item3, parent, false);
-            return new ViewHolder3(view, viewType);
-        }
-        else  { // default goes to EnterNames
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item, parent, false);
-            return new ViewHolder1(view, viewType);
+        View view;
+        switch (viewType) {
+            case ENTER_NAMES:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item, parent, false);
+                return new ViewHolder1(view, viewType);
+
+            case TIMER:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item2, parent, false);
+                return new ViewHolder2(view, viewType);
+
+            case SWIMMER_DETAILS:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item3, parent, false);
+                return new ViewHolder3(view, viewType);
+
+            default:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.swimmer_list_item, parent, false);
+                return new ViewHolder1(view, viewType);
         }
     }
 
@@ -74,9 +87,14 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (holder instanceof ViewHolder1) { //Enter Names
             ((ViewHolder1) holder).txtlaneNumber.setText(position + 1 + "");
-            if (position == 0) { // only adds Hint text for first item
-                ((ViewHolder1) holder).editName.setHint("Participant Name (Optional)");
+
+            if (!swimmers.get(position).getName().contains("Swimmer ")) {
+                ((ViewHolder1) holder).editName.setText(swimmers.get(position).getName());
             }
+            else if (position == 0) {
+                ((ViewHolder1) holder).editName.setHint("Participant Name (Optional)"); // only adds Hint text for first item
+            }
+
             ((ViewHolder1) holder).editName.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,6 +113,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
             });
         }
         else if (holder instanceof ViewHolder2) { //Timer
+//            ((ViewHolder2) holder).parent.getLayoutParams().height = (itemHeight > 0) ? itemHeight : ((ViewHolder2) holder).parent.getLayoutParams().height;
             ((ViewHolder2) holder).txtName.setText(swimmers.get(position).getName());
             ((ViewHolder2) holder).txtlaneNumber.setText(position + 1 + "");
             ((ViewHolder2) holder).splitBtn.setOnClickListener(v -> {
@@ -160,6 +179,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
         private TextView txtName;
         private Button splitBtn;
         private TextView txtSplit;
+        private CardView parent;
 
         public ViewHolder2(@NonNull View itemView, int viewType) {
             super(itemView);
@@ -167,6 +187,7 @@ public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements Timer
             txtName = itemView.findViewById(R.id.txtName);
             splitBtn = itemView.findViewById(R.id.splitBtn);
             txtSplit = itemView.findViewById(R.id.txtSplit);
+            parent = itemView.findViewById(R.id.parent);
         }
     }
 

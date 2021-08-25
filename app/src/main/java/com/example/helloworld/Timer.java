@@ -5,6 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,7 +32,8 @@ public class Timer extends AppCompatActivity implements TimerInterface {
     private Handler handler;
     private int minutes, seconds, centiseconds = 0;
     private SwimmerRecViewAdapter adapter;
-    ArrayList<Swimmer> swimmers;
+    private ArrayList<Swimmer> swimmers;
+    private int containerHeight;
 
     private Stopwatch stopwatch = Stopwatch.createUnstarted(
             new Ticker() {
@@ -47,13 +51,19 @@ public class Timer extends AppCompatActivity implements TimerInterface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
         swimmers = getIntent().getParcelableArrayListExtra("SWIMMERS");
+        containerHeight = getIntent().getIntExtra("HEIGHT", 0);
+
+        for (Swimmer swimmer : swimmers) {
+            if (swimmer.getExistingLaps().size() > 0) swimmer.getExistingLaps().clear();
+        }
 
         txtTimer =  findViewById(R.id.txtTimer);
         actionBtn = findViewById(R.id.actionBtn);
         swimmerRecview = findViewById(R.id.swimmerRecView);
 
-        adapter = new SwimmerRecViewAdapter(this, 2, swimmers);
+        adapter = new SwimmerRecViewAdapter(this, SwimmerRecViewAdapter.TIMER, swimmers); // TODO fit to screen
         swimmerRecview.setHasFixedSize(true);
+        adapter.setHeight(containerHeight);
         swimmerRecview.setAdapter(adapter);
         swimmerRecview.setLayoutManager(new LinearLayoutManager(this));
 
@@ -92,7 +102,23 @@ public class Timer extends AppCompatActivity implements TimerInterface {
 
             txtTimer.setText(String.format("%02d:%02d.%02d", minutes,seconds,centiseconds));
             
-            handler.postDelayed(runnable, 10); //10 millisecond delay so the timer goes by 0.01 seconds like stopwatches do
+            handler.postDelayed(runnable, 10); // 10 millisecond delay so the timer goes by 0.01 seconds like stopwatches do
         }
     };
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (stopwatch.isRunning()) stopwatch.stop();
+                stopwatch.reset();
+                handler.removeCallbacks(runnable);
+
+                Intent intent = new Intent(Timer.this, EnterNames.class);
+                intent.putParcelableArrayListExtra("SWIMMERS", swimmers);
+                startActivity(intent);
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
 }
