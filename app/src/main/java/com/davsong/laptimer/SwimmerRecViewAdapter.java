@@ -1,12 +1,10 @@
-package com.example.helloworld;
+package com.davsong.laptimer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class SwimmerRecViewAdapter extends RecyclerView.Adapter implements TimerInterface {
 

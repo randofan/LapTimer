@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package com.davsong.laptimer;
 
 import android.view.LayoutInflater;
 import android.view.View;

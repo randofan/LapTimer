@@ -1,9 +1,8 @@
-package com.example.helloworld;
+package com.davsong.laptimer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.TextView;
 
 public class Settings extends AppCompatActivity {
 

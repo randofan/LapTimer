@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package com.davsong.laptimer;
 
 import androidx.appcompat.app.AppCompatActivity;
 

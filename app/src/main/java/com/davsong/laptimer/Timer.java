@@ -1,15 +1,11 @@
-package com.example.helloworld;
+package com.davsong.laptimer;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -22,7 +18,6 @@ import com.google.common.base.Ticker;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class Timer extends AppCompatActivity implements TimerInterface {
 

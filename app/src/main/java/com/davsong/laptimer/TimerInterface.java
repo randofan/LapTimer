@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package com.davsong.laptimer;
 
 import java.util.concurrent.atomic.AtomicLong;
 
